@@ -1,7 +1,6 @@
 /*
  * 目录森林的增删改查、路径回溯、非递归遍历，以及树/森林与二叉树的互转。
- *
- * 存储约定：
+ * 目录树的结点定义：
  *   firstChild  长子，转换后是二叉树左孩子
  *   nextSibling 右兄弟，转换后是二叉树右孩子
  *   parent      仅用于把祖先压栈，不参与孩子兄弟的定义
@@ -15,12 +14,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* 路径分隔符同时接受 Unix 的斜杠和 Windows 的反斜杠。 */
+//路径分隔符，win和linux都能用，我有时候用ubuntu改代码，你们别动这个-贺
 static int is_sep(char c) {
     return c == '/' || c == '\\';
 }
 
-/* 取最后一个点后面的扩展名。隐藏文件“.gitignore”和“文件.”不算有扩展名。 */
+//取最后一个点后面的扩展名
 static void copy_ext(char *ext, const char *filename) {
     const char *dot = strrchr(filename, '.');
     ext[0] = '\0';
@@ -30,25 +29,25 @@ static void copy_ext(char *ext, const char *filename) {
     snprintf(ext, MAX_EXT, "%s", dot + 1);
 }
 
-/* 重命名用的单层名字：非空、短于 MAX_NAME、中间不能再出现分隔符。 */
+//重命名用的单层名字：非空、短于 MAX_NAME、中间不能再出现分隔符
 static int valid_single_name(const char *name) {
     int n;
     if (!name || name[0] == '\0') {
-        return 0;
+        return 0;//如果名字为空，返回0表示无效
     }
     n = (int)strlen(name);
     if (n <= 0 || n >= MAX_NAME) {
-        return 0;
+        return 0;//如果名字长度小于等于0或者大于等于MAX_NAME，返回0表示无效
     }
     for (; *name; name++) {
         if (is_sep(*name)) {
-            return 0;
+            return 0;//如果名字中包含路径分隔符，返回0表示无效
         }
     }
     return 1;
 }
 
-/* calloc 把三个指针都置成 NULL。目录不记录大小，文件从名字里拆出扩展名。 */
+//calloc 把三个指针都置成 NULL。目录不记录大小，文件从名字里拆出扩展名
 static CSNode *new_cs(const char *name, NodeKind kind, long size) {
     CSNode *n = (CSNode *)calloc(1, sizeof(CSNode));
     if (!n) {

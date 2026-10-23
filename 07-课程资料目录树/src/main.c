@@ -25,6 +25,8 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             佛祖保佑       永无BUG
  * 有点难QWQ，为了代码可读性做了一下代码格式化
+ * 所有人写代码时候注意添加注释，方便别人看懂你的代码-贺
+ * 能拆分的功能全部单独拆分成模块，方便别人调用！！
  */
 
 #include "catalog.h"
@@ -110,7 +112,7 @@ static void do_create_file(Forest *f) {
     int rc;
     read_line("文件路径：", path, MAX_PATH);
     read_line("文件大小：", buf, (int)sizeof(buf));
-    size = strtol(buf, &end, 10);
+    size = strtol(buf, &end, 10);//将字符串转换为长整型
     if (end == buf || size < 0) {
         printf("%s\n", catalog_err(CAT_INVALID));
         return;
@@ -119,6 +121,7 @@ static void do_create_file(Forest *f) {
     printf("%s\n", rc == CAT_OK ? "已创建文件。" : catalog_err(rc));
 }
 
+//删除目录
 static void do_delete(Forest *f) {
     char path[MAX_PATH];
     int rc;
@@ -127,9 +130,10 @@ static void do_delete(Forest *f) {
     printf("%s\n", rc == CAT_OK ? "已删除（目录会连同子孙一起删除）。" : catalog_err(rc));
 }
 
+//修改目录或文件
 static void do_modify(Forest *f) {
     char path[MAX_PATH];
-    char extra[MAX_NAME];
+    char extra[MAX_NAME];//用来存储新名称或新大小
     int which, rc;
     read_line("要修改的路径：", path, MAX_PATH);
     printf("1 重命名    2 修改文件大小\n");
