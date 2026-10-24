@@ -41,7 +41,7 @@ void hash_destroy(HashTable *H) {
     H->count = 0;
 }
 
-/* djb2：初值 5381，每读一个字节做 h = h*33 + c。用 unsigned long，溢出按模 2^n 回绕，是有定义的。 */
+// djb2：初值 5381，每读一个字节做 h = h*33 + c。用 unsigned long，溢出按模 2^n 回绕，是有定义的。
 unsigned hash_string(const char *s, int size) {
     unsigned long h = 5381;
     const unsigned char *p = (const unsigned char *)(s ? s : "");
@@ -55,7 +55,7 @@ unsigned hash_string(const char *s, int size) {
     return (unsigned)(h % (unsigned)size);
 }
 
-/* 头插法处理冲突：新结点的 next 指向桶里原来的链，再让桶指向新结点。 */
+// 头插法处理冲突：新结点的 next 指向桶里原来的链，再让桶指向新结点。
 int hash_insert(HashTable *H, const FileInfo *e) {
     unsigned idx;
     HashNode *node;

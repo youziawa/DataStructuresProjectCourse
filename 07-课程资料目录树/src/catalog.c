@@ -62,7 +62,7 @@ static CSNode *new_cs(const char *name, NodeKind kind, long size) {
     return n;
 }
 
-/* 接到长子链的末尾，保证先创建的孩子排在前面。时间与这一层已有的孩子数成正比。 */
+// 接到长子链的末尾，保证先创建的孩子排在前面。时间与这一层已有的孩子数成正比。
 static void append_child(CSNode *parent, CSNode *node) {
     node->parent = parent;
     node->nextSibling = NULL;
@@ -77,7 +77,7 @@ static void append_child(CSNode *parent, CSNode *node) {
     p->nextSibling = node;
 }
 
-/* 新的课程根目录是森林里的下一棵树，parent 必须是 NULL。 */
+// 新的课程根目录是森林里的下一棵树，parent 必须是 NULL。
 static void append_root(Forest *f, CSNode *node) {
     node->parent = NULL;
     node->nextSibling = NULL;
@@ -92,7 +92,7 @@ static void append_root(Forest *f, CSNode *node) {
     p->nextSibling = node;
 }
 
-/* 在一条兄弟链上按名字顺序查找。同层查找是 O(孩子数)。 */
+// 在一条兄弟链上按名字顺序查找。同层查找是 O(孩子数)。
 static CSNode *find_sibling(CSNode *first, const char *name) {
     CSNode *p;
     for (p = first; p; p = p->nextSibling) {
@@ -121,7 +121,7 @@ static void free_subtree(CSNode *n) {
     free(n);
 }
 
-/* 把树上的一个文件抄进 FileInfo。路径通过栈回溯生成，不在结点里另存一份。 */
+// 把树上的一个文件抄进 FileInfo。路径通过栈回溯生成，不在结点里另存一份。
 static void fill_info(FileInfo *e, const CSNode *n) {
     MyString path;
     StrInit(&path);
@@ -134,7 +134,7 @@ void forest_init(Forest *f) {
     f->firstRoot = NULL;
 }
 
-/* 按根的兄弟链逐棵释放。释放前先断开 nextSibling，free_subtree 才不会碰到下一棵树。 */
+// 按根的兄弟链逐棵释放。释放前先断开 nextSibling，free_subtree 才不会碰到下一棵树。
 void forest_destroy(Forest *f) {
     CSNode *p;
     if (!f) {
@@ -232,7 +232,7 @@ int split_path(const char *path, char parts[][MAX_NAME], int max_parts) {
     return n;
 }
 
-/* 从森林的根链开始，一层层在兄弟链上找名字。中间遇到文件却还有下一层，直接失败。 */
+// 从森林的根链开始，一层层在兄弟链上找名字。中间遇到文件却还有下一层，直接失败。
 CSNode *catalog_find(Forest *f, const char *path) {
     char parts[MAX_DEPTH][MAX_NAME];
     int n, i;
@@ -295,7 +295,7 @@ static CSNode *find_parent(Forest *f, char parts[][MAX_NAME], int n, int *err) {
     return cur;
 }
 
-/* 只新建最后一层目录。父路径不存在时不自动补齐，方便测试“路径不存在”。 */
+// 只新建最后一层目录。父路径不存在时不自动补齐，方便测试“路径不存在”。
 int catalog_mkdir(Forest *f, const char *path) {
     char parts[MAX_DEPTH][MAX_NAME];
     int n, err;
@@ -334,7 +334,7 @@ int catalog_mkdir(Forest *f, const char *path) {
     return CAT_OK;
 }
 
-/* 新建文件。单层路径表示这是森林中的一棵“只有一个文件”的树，用于单文件边界。 */
+// 新建文件。单层路径表示这是森林中的一棵“只有一个文件”的树，用于单文件边界。
 int catalog_touch(Forest *f, const char *path, long size) {
     char parts[MAX_DEPTH][MAX_NAME];
     int n, err;
@@ -396,7 +396,7 @@ static int unlink_node(Forest *f, CSNode *node) {
     return -1;
 }
 
-/* 先摘链再释放子树。若先 free，父结点或左兄弟仍会指向已释放的地址。 */
+// 先摘链再释放子树。若先 free，父结点或左兄弟仍会指向已释放的地址。
 int catalog_delete(Forest *f, const char *path) {
     CSNode *node = catalog_find(f, path);
     if (!node) {
@@ -409,7 +409,7 @@ int catalog_delete(Forest *f, const char *path) {
     return CAT_OK;
 }
 
-/* 改名后如果是文件，扩展名按新名字重算，否则按扩展名过滤会仍显示旧后缀。 */
+// 改名后如果是文件，扩展名按新名字重算，否则按扩展名过滤会仍显示旧后缀。
 int catalog_rename(Forest *f, const char *path, const char *new_name) {
     CSNode *node;
     CSNode *head;
@@ -488,7 +488,7 @@ int catalog_path_string(const CSNode *node, MyString *out) {
     return CAT_OK;
 }
 
-/* 与 catalog_path_string 同一算法，只是把每一次入栈、出栈打印出来。 */
+// 与 catalog_path_string 同一算法，只是把每一次入栈、出栈打印出来。
 void catalog_show_path(const CSNode *node) {
     SeqStack s;
     const CSNode *p;
@@ -554,7 +554,7 @@ void catalog_show_node(Forest *f, const char *path) {
     StrDestroy(&full);
 }
 
-/* 先序地按缩进打印：先打印结点，再打印长子子树，然后回到兄弟。仅用于显示。 */
+// 先序地按缩进打印：先打印结点，再打印长子子树，然后回到兄弟。仅用于显示。
 static void print_tree(const CSNode *n, int depth) {
     const CSNode *p;
     for (p = n; p; p = p->nextSibling) {
@@ -644,7 +644,7 @@ int catalog_collect_level(const CSNode *dir, SeqList *files, LinkList *links) {
     return CAT_OK;
 }
 
-/* 文件夹不参与文件名匹配。命中时 pos 是关键词在文件名中的起始下标。 */
+// 文件夹不参与文件名匹配。命中时 pos 是关键词在文件名中的起始下标。
 static int match_file(const CSNode *n, const MyString *pat, int *pos, OpStat *st) {
     MyString name;
     int at;
@@ -819,7 +819,7 @@ int catalog_node_count(const Forest *f) {
     return count_walk(f->firstRoot);
 }
 
-/* 结构相等：名字、类型、大小、扩展名相同，并且长子链和兄弟链递归相同。不比较指针值。 */
+// 结构相等：名字、类型、大小、扩展名相同，并且长子链和兄弟链递归相同。不比较指针值。
 static int node_equal(const CSNode *a, const CSNode *b) {
     if (!a || !b) {
         return a == b;
@@ -840,7 +840,7 @@ int forest_equal(const Forest *a, const Forest *b) {
     return node_equal(a->firstRoot, b->firstRoot);
 }
 
-/* expected 是 n 应该指向的父结点。每个孩子再以 n 作为它们的期望父结点向下检查。 */
+// expected 是 n 应该指向的父结点。每个孩子再以 n 作为它们的期望父结点向下检查。
 static int parents_ok_node(const CSNode *n, const CSNode *expected) {
     const CSNode *c;
     if (!n) {
@@ -903,7 +903,7 @@ void cs_preorder(const CSNode *root, WalkFn fn, void *ctx) {
     while (!stack_empty(&s)) {
         const CSNode *p = (const CSNode *)stack_pop(&s);
         fn(ctx, p->name);
-        /* 先压兄弟、后压长子，出栈时才是先长子后兄弟。 */
+        // 先压兄弟、后压长子，出栈时才是先长子后兄弟。
         if (p->nextSibling) {
             stack_push(&s, (void *)p->nextSibling);
         }
@@ -940,7 +940,7 @@ void cs_tree_preorder(const CSNode *root, WalkFn fn, void *ctx) {
  */
 typedef struct {
     const CSNode *node;
-    int state; /* 0：尚未展开孩子；1：孩子已处理，可以访问自己 */
+    int state; // 0：尚未展开孩子；1：孩子已处理，可以访问自己
 } WalkFrame;
 
 typedef struct {
@@ -998,7 +998,7 @@ void cs_tree_postorder(const CSNode *root, WalkFn fn, void *ctx) {
         int idx = fs.top;
         if (fs.data[idx].state == 0) {
             const CSNode *node = fs.data[idx].node;
-            /* 先标记成“孩子已展开”，再把孩子压到自己上面。孩子全部出栈后才会回到这里。 */
+            // 先标记成“孩子已展开”，再把孩子压到自己上面。孩子全部出栈后才会回到这里。
             fs.data[idx].state = 1;
             push_frames_reverse(&fs, node->firstChild);
         } else {
@@ -1016,7 +1016,7 @@ void forest_preorder(const Forest *f, WalkFn fn, void *ctx) {
     }
 }
 
-/* 森林的一般树后序是每棵树各自后序，不能对整片森林直接做二叉树后序。 */
+// 森林的一般树后序是每棵树各自后序，不能对整片森林直接做二叉树后序。
 void forest_tree_postorder(const Forest *f, WalkFn fn, void *ctx) {
     const CSNode *p;
     if (!f) {
@@ -1095,8 +1095,8 @@ static CSNode *bi_to_cs_node(const BiNode *b, CSNode *parent) {
         return NULL;
     }
     n->parent = parent;
-    n->firstChild = bi_to_cs_node(b->lchild, n);          /* 左孩子变长子，父结点是自己 */
-    n->nextSibling = bi_to_cs_node(b->rchild, parent);    /* 右孩子变兄弟，父结点与自己相同 */
+    n->firstChild = bi_to_cs_node(b->lchild, n); // 左孩子变长子，父结点是自己
+    n->nextSibling = bi_to_cs_node(b->rchild, parent); // 右孩子变兄弟，父结点与自己相同
     return n;
 }
 
@@ -1128,7 +1128,7 @@ int bi_to_forest(const BiNode *root, Forest *out) {
     return CAT_OK;
 }
 
-/* 非递归先序。先压右再压左，栈顶是左孩子。时间 O(n)，栈深最坏 O(n)。 */
+// 非递归先序。先压右再压左，栈顶是左孩子。时间 O(n)，栈深最坏 O(n)。
 void bi_preorder(const BiNode *root, WalkFn fn, void *ctx) {
     SeqStack s;
     if (!root || !fn) {
@@ -1199,7 +1199,7 @@ void bi_postorder(const BiNode *root, WalkFn fn, void *ctx) {
             break;
         }
         if (p->rchild && p->rchild != last) {
-            /* 右子树还没有访问，转向右孩子，当前结点留在栈里。 */
+            // 右子树还没有访问，转向右孩子，当前结点留在栈里。
             p = p->rchild;
         } else {
             stack_pop(&s);
@@ -1238,7 +1238,7 @@ void bi_postorder_rec(const BiNode *root, WalkFn fn, void *ctx) {
     fn(ctx, root->name);
 }
 
-/* 括号表示：名字(左子, 右子)。没有孩子的叶子不打印括号，空孩子打印 #。 */
+// 括号表示：名字(左子, 右子)。没有孩子的叶子不打印括号，空孩子打印 #。
 static void print_paren(const BiNode *b) {
     if (!b) {
         printf("#");
@@ -1320,7 +1320,7 @@ void catalog_show_traversals(const Forest *f) {
     StrDestroy(&rec_pre);
 }
 
-/* 转换演示不修改原森林：forest_to_bi 只读结点，bi_to_forest 写到另一片新森林。 */
+// 转换演示不修改原森林：forest_to_bi 只读结点，bi_to_forest 写到另一片新森林。
 void catalog_show_conversion(const Forest *f) {
     BiNode *bi;
     Forest back;

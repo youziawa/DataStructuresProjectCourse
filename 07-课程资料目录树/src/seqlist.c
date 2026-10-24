@@ -80,7 +80,7 @@ int seq_assign(SeqList *dest, const SeqList *src) {
     return 0;
 }
 
-/* 从后往前搬，避免前面的元素把还没搬走的元素覆盖掉。 */
+// 从后往前搬，避免前面的元素把还没搬走的元素覆盖掉。
 int seq_insert(SeqList *L, int index, const FileInfo *e, OpStat *st) {
     int i;
     if (!L || !e || index < 0 || index > L->length) {

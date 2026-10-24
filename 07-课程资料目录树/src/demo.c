@@ -15,7 +15,7 @@
 
 static unsigned rng = 20261018u;
 
-/* 线性同余发生器。不调用 rand，生成过程固定，实验可以重复。 */
+// 线性同余发生器。不调用 rand，生成过程固定，实验可以重复。
 static int rnd(void) {
     rng = rng * 1103515245u + 12345u;
     return (int)((rng >> 16) & 32767);
@@ -83,7 +83,7 @@ static void fill_random(SeqList *L, int n) {
     free(order);
 }
 
-/* 两种表都在下标 0 连续插入。顺序表每次后移已有元素，链表只改指针。 */
+// 两种表都在下标 0 连续插入。顺序表每次后移已有元素，链表只改指针。
 static void bench_insert(int n) {
     SeqList seq;
     LinkList link;

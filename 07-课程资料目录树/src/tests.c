@@ -48,7 +48,7 @@ static int newline_count(const MyString *s) {
     return n;
 }
 
-/* 串：赋值、朴素匹配（含中文关键词）、空模式、子串、连接。 */
+// 串：赋值、朴素匹配（含中文关键词）、空模式、子串、连接。
 static void test_string(void) {
     MyString a, b, c, sub;
     OpStat st;
@@ -88,7 +88,7 @@ static void test_string(void) {
     StrDestroy(&sub);
 }
 
-/* 栈的后进先出，以及表头插入 n 次时顺序表、链表的赋值次数公式。 */
+// 栈的后进先出，以及表头插入 n 次时顺序表、链表的赋值次数公式。
 static void test_stack_and_lists(void) {
     SeqStack s;
     SeqList seq;
@@ -147,7 +147,7 @@ static void names_of(const SeqList *L, char *buf, int nbuf) {
     }
 }
 
-/* 五种排序的结果和稳定性，以及顺序、折半、分块查找和散列表的重名链。 */
+// 五种排序的结果和稳定性，以及顺序、折半、分块查找和散列表的重名链。
 static void test_sort_search(void) {
     SeqList src, a, b, c, d, e;
     OpStat st;
@@ -315,7 +315,7 @@ static void test_sort_search(void) {
     hash_destroy(&ht);
 }
 
-/* 空目录、单文件、父路径不存在、同层重名、删除子树、改名后扩展名变化。 */
+// 空目录、单文件、父路径不存在、同层重名、删除子树、改名后扩展名变化。
 static void test_split_and_crud(void) {
     char parts[MAX_DEPTH][MAX_NAME];
     Forest f;
@@ -482,7 +482,7 @@ static void test_traverse_and_convert(void) {
     StrDestroy(&direct);
 }
 
-/* 示例数据：空目录、栈生成的完整路径、跨目录重名、关键词、扩展名、转换可逆且不破坏原森林。 */
+// 示例数据：空目录、栈生成的完整路径、跨目录重名、关键词、扩展名、转换可逆且不破坏原森林。
 static void test_sample_boundaries(void) {
     Forest f, back;
     BiNode *bi;

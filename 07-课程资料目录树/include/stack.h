@@ -14,22 +14,22 @@ typedef struct {
     int capacity;
 } SeqStack;
 
-/* 置为空栈。 */
+// 置为空栈。
 int stack_init(SeqStack *s);
-/* 释放指针数组本身。 */
+// 释放指针数组本身。
 void stack_destroy(SeqStack *s);
-/* 空栈返回 1，否则返回 0。 */
+// 空栈返回 1，否则返回 0。
 int stack_empty(const SeqStack *s);
 /*
  * 入栈。成功返回 0，内存不足返回 -1。
  * 允许压入 NULL，但本工程约定不压空指针，这样 pop 返回 NULL 就能表示栈空。
  */
 int stack_push(SeqStack *s, void *p);
-/* 出栈。空栈返回 NULL。 */
+// 出栈。空栈返回 NULL。
 void *stack_pop(SeqStack *s);
-/* 读栈顶但不弹出。空栈返回 NULL。 */
+// 读栈顶但不弹出。空栈返回 NULL。
 void *stack_peek(const SeqStack *s);
-/* 当前元素个数，空栈为 0。 */
+// 当前元素个数，空栈为 0。
 int stack_size(const SeqStack *s);
 
 #endif

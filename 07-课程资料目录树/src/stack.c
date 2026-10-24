@@ -31,7 +31,7 @@ int stack_size(const SeqStack *s) {
     return s ? s->top + 1 : 0;
 }
 
-/* 先扩容再写入。realloc 失败时栈内容不变，调用方看到 -1。 */
+// 先扩容再写入。realloc 失败时栈内容不变，调用方看到 -1。
 int stack_push(SeqStack *s, void *p) {
     if (s->top + 1 >= s->capacity) {
         int cap = s->capacity > 0 ? s->capacity * 2 : 16;

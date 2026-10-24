@@ -7,13 +7,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* 空串不分配 data，避免每个空串都 malloc(1)。 */
+// 空串不分配 data，避免每个空串都 malloc(1)。
 void StrInit(MyString *s) {
     s->data = NULL;
     s->length = 0;
 }
 
-/* free(NULL) 是合法的，所以空串直接 free 也安全。 */
+// free(NULL) 是合法的，所以空串直接 free 也安全。
 void StrDestroy(MyString *s) {
     if (!s) {
         return;
@@ -38,7 +38,7 @@ int StrLength(const MyString *s) {
     return s ? s->length : 0;
 }
 
-/* 先分配新空间，成功后再释放旧空间，分配失败时 s 保持原样。 */
+// 先分配新空间，成功后再释放旧空间，分配失败时 s 保持原样。
 int StrAssign(MyString *s, const char *cstr) {
     int n;
     char *nd;
@@ -67,7 +67,7 @@ int StrCopy(MyString *dest, const MyString *src) {
     return StrAssign(dest, StrCStr(src));
 }
 
-/* 逐字节比较。较短的串是较长串的前缀时，短串更小，用长度差表示。 */
+// 逐字节比较。较短的串是较长串的前缀时，短串更小，用长度差表示。
 int StrCompare(const MyString *a, const MyString *b) {
     int i = 0;
     int na = StrLength(a);
@@ -123,7 +123,7 @@ int StrAppendCStr(MyString *dest, const char *cstr) {
     return 0;
 }
 
-/* 先连到临时串再交给 dest，这样 dest 与 a 或 b 重叠时不会读到已释放的内存。 */
+// 先连到临时串再交给 dest，这样 dest 与 a 或 b 重叠时不会读到已释放的内存。
 int StrConcat(MyString *dest, const MyString *a, const MyString *b) {
     MyString tmp;
     if (!dest || !a || !b) {
@@ -139,7 +139,7 @@ int StrConcat(MyString *dest, const MyString *a, const MyString *b) {
     return 0;
 }
 
-/* pos+len 允许等于 length，表示截到串尾；大于 length 则越界。 */
+// pos+len 允许等于 length，表示截到串尾；大于 length 则越界。
 int SubString(MyString *sub, const MyString *s, int pos, int len) {
     char *nd;
     if (!sub || !s || pos < 0 || len < 0 || pos + len > s->length) {

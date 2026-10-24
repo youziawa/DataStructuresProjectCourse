@@ -46,7 +46,7 @@ void link_destroy(LinkList *L) {
     L->length = 0;
 }
 
-/* 新结点的 next 先指向原第一个数据，再让头结点指向新结点。空表时还要更新 tail。 */
+// 新结点的 next 先指向原第一个数据，再让头结点指向新结点。空表时还要更新 tail。
 int link_insert_head(LinkList *L, const FileInfo *e, OpStat *st) {
     LNode *node;
     if (!L || !L->head || !e) {
@@ -69,7 +69,7 @@ int link_insert_head(LinkList *L, const FileInfo *e, OpStat *st) {
     return 0;
 }
 
-/* tail 一直指向最后结点，新结点直接接在 tail 后面，再把 tail 移过去。 */
+// tail 一直指向最后结点，新结点直接接在 tail 后面，再把 tail 移过去。
 int link_push_back(LinkList *L, const FileInfo *e, OpStat *st) {
     LNode *node;
     if (!L || !L->head || !e) {

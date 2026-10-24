@@ -130,7 +130,7 @@ int block_search(const SeqList *L, const char *name, int block_size, OpStat *st)
     return -1;
 }
 
-/* 直接插入。a[0..i-1] 已有序，把 a[i] 临时取出，大的元素向右移出空位。 */
+// 直接插入。a[0..i-1] 已有序，把 a[i] 临时取出，大的元素向右移出空位。
 void insert_sort(SeqList *L, SortKey key, OpStat *st) {
     int i;
     if (!L || L->length < 2) {
@@ -203,7 +203,7 @@ void bin_insert_sort(SeqList *L, SortKey key, OpStat *st) {
     }
 }
 
-/* 希尔排序。对每个 gap 做一趟分组插入，gap 最终变为 1，退化为直接插入。 */
+// 希尔排序。对每个 gap 做一趟分组插入，gap 最终变为 1，退化为直接插入。
 void shell_sort(SeqList *L, SortKey key, OpStat *st) {
     int n, gap, i;
     if (!L || L->length < 2) {
@@ -238,7 +238,7 @@ void shell_sort(SeqList *L, SortKey key, OpStat *st) {
     }
 }
 
-/* 冒泡。第 i 趟之后，末尾 i 个元素已经就位，内层不用再看它们。swapped 为 0 说明已经有序。 */
+// 冒泡。第 i 趟之后，末尾 i 个元素已经就位，内层不用再看它们。swapped 为 0 说明已经有序。
 void bubble_sort(SeqList *L, SortKey key, OpStat *st) {
     int i, n;
     if (!L || L->length < 2) {

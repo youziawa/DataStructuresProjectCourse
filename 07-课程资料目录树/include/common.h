@@ -24,7 +24,7 @@ typedef struct {
     long moves;
 } OpStat;
 
-/* 把统计量清零。s 允许为 NULL，调用方可以在不关心统计时传空指针。 */
+// 把统计量清零。s 允许为 NULL，调用方可以在不关心统计时传空指针。
 static inline void stat_reset(OpStat *s) {
     if (s) {
         s->compares = 0;

@@ -22,17 +22,17 @@ typedef struct HashNode {
 
 typedef struct {
     HashNode **bucket;
-    int size;  /* 桶的个数 */
-    int count; /* 已插入的记录数，含重名 */
+    int size; // 桶的个数
+    int count; // 已插入的记录数，含重名
 } HashTable;
 
-/* size < 1 时改用 211。成功返回 0。 */
+// size < 1 时改用 211。成功返回 0。
 int hash_init(HashTable *H, int size);
-/* 释放所有链结点和桶数组。 */
+// 释放所有链结点和桶数组。
 void hash_destroy(HashTable *H);
-/* 计算文件名对应的桶号，范围是 [0, size)。 */
+// 计算文件名对应的桶号，范围是 [0, size)。
 unsigned hash_string(const char *s, int size);
-/* 插入一条记录，允许同名。成功返回 0，内存不足返回 -1。 */
+// 插入一条记录，允许同名。成功返回 0，内存不足返回 -1。
 int hash_insert(HashTable *H, const FileInfo *e);
 /*
  * 查找文件名。找到返回 0，并把第一条同名记录写入 out（out 可为 NULL）。

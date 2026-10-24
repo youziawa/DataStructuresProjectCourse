@@ -16,16 +16,16 @@ typedef struct LNode {
 } LNode;
 
 typedef struct {
-    LNode *head; /* 头结点，data 字段无意义 */
-    LNode *tail; /* 最后一个数据结点；空表时等于 head */
+    LNode *head; // 头结点，data 字段无意义
+    LNode *tail; // 最后一个数据结点；空表时等于 head
     int length;
 } LinkList;
 
-/* 创建头结点。失败返回 -1。 */
+// 创建头结点。失败返回 -1。
 int link_init(LinkList *L);
-/* 释放全部结点，包括头结点。 */
+// 释放全部结点，包括头结点。
 void link_destroy(LinkList *L);
-/* 删除全部数据结点，保留头结点。 */
+// 删除全部数据结点，保留头结点。
 void link_clear(LinkList *L);
 /*
  * 头插。新结点插在头结点之后，成为第一个数据。
@@ -42,9 +42,9 @@ int link_push_back(LinkList *L, const FileInfo *e, OpStat *st);
  * 成功平均比较 (n+1)/2 次，失败比较 n 次。空间 O(1)。
  */
 int link_search(const LinkList *L, const char *name, OpStat *st);
-/* 取第 index 个数据结点。需要沿指针走 index 步，时间 O(index)。 */
+// 取第 index 个数据结点。需要沿指针走 index 步，时间 O(index)。
 int link_get(const LinkList *L, int index, FileInfo *out);
-/* 数据结点个数，不含头结点。 */
+// 数据结点个数，不含头结点。
 int link_length(const LinkList *L);
 
 #endif

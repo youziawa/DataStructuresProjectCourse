@@ -14,11 +14,11 @@ typedef struct {
     int length;
 } MyString;
 
-/* 初始化为空串。调用其它运算之前必须先初始化，否则 data 是野指针。 */
+// 初始化为空串。调用其它运算之前必须先初始化，否则 data 是野指针。
 void StrInit(MyString *s);
-/* 释放堆空间并置空。可以重复调用。 */
+// 释放堆空间并置空。可以重复调用。
 void StrDestroy(MyString *s);
-/* 清空内容，效果与销毁后再初始化相同。 */
+// 清空内容，效果与销毁后再初始化相同。
 void StrClear(MyString *s);
 
 /*
@@ -27,23 +27,23 @@ void StrClear(MyString *s);
  * 时间 O(n)，n 为字符数；空间 O(n)。
  */
 int StrAssign(MyString *s, const char *cstr);
-/* 复制 src 到 dest。成功返回 0，失败返回 -1。 */
+// 复制 src 到 dest。成功返回 0，失败返回 -1。
 int StrCopy(MyString *dest, const MyString *src);
 /*
  * 按字典序比较。返回值小于 0、等于 0、大于 0 分别表示 a<b、a==b、a>b。
  * 比较的是无符号字节，这样中文 UTF-8 也不会因符号位被看成负数。时间 O(min(na, nb))。
  */
 int StrCompare(const MyString *a, const MyString *b);
-/* 返回长度。s 为空指针时返回 0。 */
+// 返回长度。s 为空指针时返回 0。
 int StrLength(const MyString *s);
 /*
  * dest = a 接上 b。dest 可以和 a、b 是同一个变量，内部会先写到临时串。
  * 时间 O(|a|+|b|)，空间 O(|a|+|b|)。成功返回 0。
  */
 int StrConcat(MyString *dest, const MyString *a, const MyString *b);
-/* 把 src 追加到 dest 末尾。时间 O(|src|)，可能重新分配 dest。 */
+// 把 src 追加到 dest 末尾。时间 O(|src|)，可能重新分配 dest。
 int StrAppend(MyString *dest, const MyString *src);
-/* 把 C 字符串追加到 dest。路径拼接“目录/文件名”用这个函数。 */
+// 把 C 字符串追加到 dest。路径拼接“目录/文件名”用这个函数。
 int StrAppendCStr(MyString *dest, const char *cstr);
 /*
  * 求子串。pos 从 0 计，len 是要截取的长度。
@@ -59,7 +59,7 @@ int SubString(MyString *sub, const MyString *s, int pos, int len);
  * st 不为空时，compares 记录字符比较次数。
  */
 int StrIndex(const MyString *s, const MyString *pat, OpStat *st);
-/* 取出 C 字符串指针，便于 printf。空串返回指向常量 "" 的指针，不会返回 NULL。 */
+// 取出 C 字符串指针，便于 printf。空串返回指向常量 "" 的指针，不会返回 NULL。
 const char *StrCStr(const MyString *s);
 
 #endif

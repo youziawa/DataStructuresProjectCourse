@@ -159,7 +159,7 @@ static void do_modify(Forest *f) {
 }
 
 /*
- * 同层实验。回车时优先用示例里的“第3章”，那里有两个文件，查找和排序看得到结果。
+ * 同层实验。回车时优先用示例里的“第3章”，那里留了两个文件
  * 路径不存在或指向文件时，仍然运行与目录无关的算法对照，避免答辩时空白。
  */
 static void do_level_demo(Forest *f) {
@@ -186,6 +186,7 @@ static void do_level_demo(Forest *f) {
     seq_destroy(&files);
 }
 
+//执行各功能
 static void run_menu(Forest *f) {
     for (;;) {
         int choice;

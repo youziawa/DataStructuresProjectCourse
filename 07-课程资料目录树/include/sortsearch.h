@@ -3,7 +3,7 @@
 
 #include "seqlist.h"
 
-/* 排序关键字。同层文件可以按文件名，也可以按大小。 */
+// 排序关键字。同层文件可以按文件名，也可以按大小。
 typedef enum {
     KEY_NAME = 0,
     KEY_SIZE = 1
@@ -16,7 +16,7 @@ typedef enum {
  * 返回值 <0、=0、>0 分别表示 a 应排在 b 前面、两者关键字相等、a 应排在 b 后面。
  */
 int file_cmp(const FileInfo *a, const FileInfo *b, SortKey key);
-/* 是否已按 key 非降序排好。空表和单元素表视为有序。 */
+// 是否已按 key 非降序排好。空表和单元素表视为有序。
 int is_sorted(const SeqList *L, SortKey key);
 
 /*
